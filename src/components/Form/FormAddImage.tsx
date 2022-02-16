@@ -46,8 +46,12 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
   } = useForm();
   const { errors } = formState;
 
+  console.log("errors: ", errors)
+
   const onSubmit = async (data: Record<string, unknown>): Promise<void> => {
     try {
+      console.log("data: ", data);
+      console.log("imageUrl: ", imageUrl);
       // TODO SHOW ERROR TOAST IF IMAGE URL DOES NOT EXISTS
       // TODO EXECUTE ASYNC MUTATION
       // TODO SHOW SUCCESS TOAST
@@ -67,20 +71,37 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
           setLocalImageUrl={setLocalImageUrl}
           setError={setError}
           trigger={trigger}
-          // TODO SEND IMAGE ERRORS
-          // TODO REGISTER IMAGE INPUT WITH VALIDATIONS
+          error={errors.image}
+          {...register("image", { required: 'Arquivo obrigatório' })}
         />
 
         <TextInput
           placeholder="Título da imagem..."
-          // TODO SEND TITLE ERRORS
-          // TODO REGISTER TITLE INPUT WITH VALIDATIONS
+          error={errors.title}
+          {...register("title", { 
+            required: 'Título obrigatório', 
+            minLength: {
+              value: 2,
+              message: 'Mínimo de 2 caracteres',
+            },
+            maxLength: {
+              value: 20,
+              message: 'Máximo de 20 caracteres'
+            }
+          })}
         />
 
         <TextInput
           placeholder="Descrição da imagem..."
-          // TODO SEND DESCRIPTION ERRORS
-          // TODO REGISTER DESCRIPTION INPUT WITH VALIDATIONS
+          error={errors.description}
+          {...register("description", { 
+            required: 'Descrição obrigatória', 
+            maxLength: {
+              value: 65,
+              message: 'Máximo de 65 caracteres'
+            }
+            
+          })}
         />
       </Stack>
 

@@ -10,8 +10,8 @@ import { Error } from '../components/Error';
 
 export default function Home(): JSX.Element {
 
-  const getImages = async ({ pageParam = null}) => {
-    const response = await api.get(`/images?after=${pageParam}`);
+  const getImages = async ({ pageParam = 0}) => {
+    const response = await api.get(`images?after=${pageParam}`);
     return response.data;
   }
 
@@ -35,7 +35,7 @@ export default function Home(): JSX.Element {
     });
 
   const formattedData = useMemo(() => {
-    return data.pages.map(page => {
+    return data?.pages.map(page => {
       return {
         title: page.title,
         description: page.description,
