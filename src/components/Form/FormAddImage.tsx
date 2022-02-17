@@ -46,8 +46,6 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
   } = useForm();
   const { errors } = formState;
 
-  console.log("errors: ", errors)
-
   const onSubmit = async (data: Record<string, unknown>): Promise<void> => {
     try {
       console.log("data: ", data);
@@ -62,6 +60,20 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
     }
   };
 
+  function lessThan10MB(file) {
+    const sizeInMb = file[0].size /1024 /1024;
+
+    return sizeInMb;
+  }
+
+  function acceptedFormats(file) {
+    console.log("File: ", file)
+    const filename = file[0].name;
+    console.log("Accepted: ",(/\.(gif|jpe?g|png)$/i).test(filename));
+
+    return (/\.(gif|jpe?g|png)$/i).test(filename);
+  }
+
   return (
     <Box as="form" width="100%" onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={4}>
@@ -72,7 +84,13 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
           setError={setError}
           trigger={trigger}
           error={errors.image}
-          {...register("image", { required: 'Arquivo obrigatório' })}
+          {...register("image", { 
+            required: 'Arquivo obrigatório',
+            validate: {
+              lessThan10MB: v => lessThan10MB(v) < 10 || 'O arquivo deve ser menor que 10MB',
+              acceptedFormats: v => acceptedFormats(v) || 'Somente são aceitos arquivos PNG, JPEG e GIF'
+            }
+          })}
         />
 
         <TextInput

@@ -11,7 +11,7 @@ import { Error } from '../components/Error';
 export default function Home(): JSX.Element {
 
   const getImages = async ({ pageParam = 0}) => {
-    const response = await api.get(`images?after=${pageParam}`);
+    const response = await api.get(`images`);
     return response.data;
   }
 
@@ -30,7 +30,7 @@ export default function Home(): JSX.Element {
           return lastPage.nextCursor;
         }
 
-        return null;
+        return undefined;
       }
     });
 
