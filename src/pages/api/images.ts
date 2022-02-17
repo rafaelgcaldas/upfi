@@ -28,6 +28,8 @@ export default async function handler(
   if (req.method === 'POST') {
     const { url, title, description } = req.body;
 
+    console.log("owww: ", req.body )
+
     return client
       .query(
         query.Create(query.Collection('images'), {
