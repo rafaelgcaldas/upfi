@@ -24,6 +24,8 @@ export function CardList({ cards }: CardsProps): JSX.Element {
     onOpen();
   }
 
+  // console.log("Cards: ", cards);
+
   return (
     <>
       <SimpleGrid columns={3} spacing="40px" mb="8">
