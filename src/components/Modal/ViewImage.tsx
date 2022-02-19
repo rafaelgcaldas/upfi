@@ -25,7 +25,7 @@ export function ModalViewImage({
     <Modal isOpen={isOpen} onClose={onClose} size="lg">
       <ModalOverlay />
       <ModalContent>
-        <ModalBody>
+        <ModalBody bg="pGray.700">
           <Box 
             maxWidth="900px"
             maxheight="600px"
